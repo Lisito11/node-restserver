@@ -84,15 +84,18 @@ const usersPatch = (req, res=response) => {
 const usersDelete = async (req, res=response) => {
 
     const {id} = req.params;
+    // const uid = req.uid;
 
     // Delete from db
     // const user = await User.findByIdAndDelete(id);
 
     const user = await User.findByIdAndUpdate(id, {status: false})
+    // const userAuth = req.userAuth
 
     res.json({
         user
     });
+
 };
 
 module.exports = {
