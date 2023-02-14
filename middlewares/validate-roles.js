@@ -33,7 +33,7 @@ const hasRole = (...roles) => {
 
         if (!roles.includes(role)) {
             return res.status(401).json({
-                msg: `${name} is not authorized for delete users`
+                msg: `${name} is not authorized for delete entities`
             })
         }
 

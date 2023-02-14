@@ -1,5 +1,4 @@
-const Role = require('../models/role');
-const User = require('../models/user');
+const { Category, Role, User, Product } = require('../models');
 
 const isRoleValid = async (role = '') => {
     const existRole = await Role.findOne({role});
@@ -22,9 +21,42 @@ const userExistById = async (id='') => {
     }
 }
 
+const categorytExistById = async (id='') => {
+    const exist = await Category.findById(id);
+    if (!exist) {
+        throw new Error(`Category: ${id} not exist in db`)
+    }
+}
+
+const categorytExistByName = async (name='') => {
+    const nameUpper = name.toUpperCase();
+    const categoryDB = await Category.findOne({name: nameUpper})
+    if (categoryDB) {
+        throw new Error(`Category: ${name} already exist in db`)
+    }
+}
+
+const productExist = async (name='') => {
+    const nameUpper = name.toUpperCase();
+    const productDB = await Product.findOne({name: nameUpper})
+    if (productDB) {
+        throw new Error(`Product: ${name} already exist in db`)
+    }
+}
+
+const productExistById = async (id='') => {
+    const exist = await Product.findById(id).where('status').equals(true);
+    if (!exist) {
+        throw new Error(`Product: ${id} not exist or had been removed in db`)
+    }
+}
 
 module.exports = {
     isRoleValid,
     emailExist,
-    userExistById
+    userExistById,
+    categorytExistById,
+    categorytExistByName,
+    productExist,
+    productExistById
 }
